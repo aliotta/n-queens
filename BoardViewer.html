@@ -40,12 +40,13 @@
       };
       $(function(){
         // this is a pre-baked solution for n-queens in the n = 4 case, rendered to the screen using our handy visualizer.
-        displayBoard([
-          [0, 1, 0, 0],
-          [0, 0, 0, 1],
-          [1, 0, 0, 0],
-          [0, 0, 1, 0]
-        ]);
+        var b = new Board({n:5});
+        b.togglePiece(3,4);
+        b.togglePiece(4,3);
+        //var matrix = b.rotateMatrix().rows();
+        var matrix = b.rows();
+
+        displayBoard(matrix);
 
         var n = 4;
         findNRooksSolution(n);
