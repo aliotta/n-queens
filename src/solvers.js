@@ -14,7 +14,6 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 window.rookCounter = function(n, iterator) {
   var solution = undefined; 
-  var counter = 0;
 
     var findPossibilities = function(matrix, row){
        var viableBoards = [];
@@ -30,10 +29,6 @@ window.rookCounter = function(n, iterator) {
             var copy = matrix.rows().slice();
 
             viableBoards.push(JSON.stringify(copy));
-            if (i === n) {
-             
-              counter++;
-            }
           }
           matrix.togglePiece(row, i);
       }
@@ -77,9 +72,6 @@ window.rookCounter = function(n, iterator) {
               
             }
           }; 
-          if (counter > 0) {
-            deeperArray = [];
-          };
           
           
         } 
@@ -98,21 +90,23 @@ window.rookCounter = function(n, iterator) {
 
 var rooks = [];
 var queens = [];
-for (var i = 1; i < 8; i++) {
-  //debugger;
+for (var i = 0; i < 9; i++) {
   rooks[i] = rookCounter(i, "hasAnyRooksConflicts");
   queens[i] = rookCounter(i, "hasAnyQueensConflicts");
 
 }
+//base Cases so the algorithm doesn't go haywire
+queens[2] = [];
+queens[3] = [];
+rooks[0].push([]);
 
-debugger;
 
 window.findNRooksSolution = function(n) {
   return rooks[n][0].rows();
 };
 
 window.countNRooksSolutions = function(n) {
-  return solutions(n, "hasAnyRooksConflicts");
+  return rooks[n].length;
 }
 
 
@@ -205,14 +199,17 @@ window.solutions = function(n, iterator) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var Queens = queens[n][0].rows();
+  if(n===2 || n === 3){
+    debugger
+    return new Board({"n":n});
+  }
+  return queens[n][0].rows();
 };
 
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var output = solutions(n, "hasAnyQueensConflicts");
-  return output;
+  return queens[n].length;
 };
 
 
